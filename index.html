@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autocomplete Example</title>
+    <style>
+        #suggestions {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            position: absolute;
+            width: 100%;
+        }
+
+        #suggestions div {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #suggestions div:hover {
+            background-color: #f0f0f0;
+        }
+
+        #answer {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ask a Question</h1>
+    <input type="text" id="questionInput" placeholder="Or simply enter a keyword....">
+    <div id="suggestions"></div>
+    <div id="answer"></div> <!-- New element for displaying answers -->
+
+    <script>
+        const questions = [
+            "Who is Jesus Christ?",
+            "Who were the disciples of Jesus?",
+            "Who witnessed the crucifixion of Jesus?",
+            "What are the teachings of Jesus Christ?",
+            "What is the significance of the crucifixion of Jesus?",
+            "What is the resurrection of Jesus?",
+            "How does Judaism, Islam, and Hinduism see Jesus Christ?",
+            "How has the image of Jesus been depicted in art and popular culture over the centuries?",
+            "How did Jesus' followers spread Christianity after his death?",
+
+            // Add more questions here
+        ];
+
+        const answers = {
+            "Who is Jesus Christ?": "According to Jesus himself, He is God, humanities saviour and many other things. On numerous occasions Jesus states that He is God, John 10:30, Revelation 22:13, John 8:58 and that only through Him can one be redeemed, John 14:6, John 11:26. Not only does Jesus profess to be God, but His followers also claimed this as well in John 1:1-4 and John 20:28. ",
+            "Who were the disciples of Jesus?": "The names of the twelve apostles are Simon (who is called Peter) and his brother Andrew, James and his brother John, Philip, Bartholomew, Thomas (also known as Didymus), Matthew the tax collector, James son of Alphaeus, and Thaddaeus, Simon the Zealot and Judas Iscariot the one who betrayed him. Matthew 10:2-4",
+            "Who witnessed the crucifixion of Jesus?": "Among many individuals, the most notable figures were Jesus' mother Mary, Mary Magdalene and the wife of Clopas, Mary. These three Mary's are known as The Thee Marys.",
+            "What are the teachings of Jesus Christ?": "Jesus' main teaching was love. Through love, forgiveness is given, mercy is possible, patience, humbleness, empathy, and so much more. He showed us with His actions how to love and be better people. He tells us that through simply loving God with all your heart, mind, and soul and loving others the way you would like to be loved are by far the most important teachings. (Matthew 22:37-40)",
+            "What is the significance of the crucifixion of Jesus?": "Jesus' cruxifixion is significant because it completely takes away the eternal punishment for every wrong ever committed. The wrong we have done, we cannot simply rectify ourselves, it takes someone far more powerful and forgiving to fix us. God is the only person that powerful enough to even do so.(John 3:16-17)",
+            "What is the resurrection of Jesus?": "The resurrection of Jesus Christ is Jesus raising back to life after spending three days in Hell. (Matthew 28:5-7)",
+            "How does Judaism, Islam, and Hinduism see Jesus Christ?": "In Christianity and Catholocism, Jesus Christ is God, the creator of all things, the one and only true saviour of the world. In Judaism, Jesus is only seen as a man and nothing more. Islam sees Jesus as a prophet who is second to Muhammad. While Hinduism sees Jesus as one of their many gods, not higher in or lower, only one among many.",
+            "How has the image of Jesus been depicted in art and popular culture over the centuries?": "The image of Jesus from a physical perspective adapts to each cultures identity. In western cultures, Jesus is largely depicted as a white male with stright brownish hair. In Africa, Jesus' image tends to be more tailored to the people of that region with darker skin, black curly hair with defined facial features. In the Middle East, He is seen as a medium build male with wavy brownish hair and an olive green skin complexion.",
+            "How did Jesus' followers spread Christianity after his death?": "After Jesus death, He came back to life and told the disciples to spread the good news of salvation being for everyone who will recieve it to all the different regions of the earth. (Mark 16:15-16)"
+
+
+            // Add more answers for other questions here
+        };
+
+        const inputElement = document.getElementById("questionInput");
+        const suggestionsElement = document.getElementById("suggestions");
+        const answerElement = document.getElementById("answer"); // New element
+
+        inputElement.addEventListener("input", function() {
+            const userInput = inputElement.value.toLowerCase();
+            const matchingQuestions = questions.filter(question => question.toLowerCase().includes(userInput));
+
+            suggestionsElement.innerHTML = ""; // Clear previous suggestions
+
+            matchingQuestions.forEach(match => {
+                const suggestion = document.createElement("div");
+                suggestion.textContent = match;
+                suggestion.addEventListener("click", function() {
+                    inputElement.value = match; // Fill input field with selected question
+                    suggestionsElement.innerHTML = ""; // Clear suggestions
+                    displayAnswer(match);
+                });
+                suggestionsElement.appendChild(suggestion);
+            });
+        });
+
+        function displayAnswer(question) {
+            const answer = answers[question];
+            if (answer) {
+                answerElement.textContent = "Answer: " + answer; // Display answer on the web page
+            } else {
+                answerElement.textContent = "No answer found for this question.";
+            }
+        }
+    </script>
+</body>
+</html>
